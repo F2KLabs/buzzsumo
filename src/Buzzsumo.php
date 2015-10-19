@@ -39,6 +39,6 @@ class Buzzsumo {
     {
         $options += ['api_key'=>config('buzzsumo.api_key')];
 
-        return new SumoReponse($this->request->client->get($uri, ['query'=>$options]));
+        return $this->request->client->get($uri, ['query'=>$options]);
     }
 }
