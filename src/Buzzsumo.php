@@ -10,6 +10,7 @@ namespace F2klabs\Buzzsumo;
 
 use F2klabs\Buzzsumo\request\Request;
 
+
 class Buzzsumo {
 
     protected $request;
@@ -31,12 +32,14 @@ class Buzzsumo {
 
     public function content($keyword, $options = [])
     {
-        return $this->_makeRequest('/search/articles.json', $options + ['q'=>$keyword])->getBody();
+        return new $this->_makeRequest('/search/articles.json', $options + ['q'=>$keyword])->getBody();
     }
 
     private function _makeRequest($uri, $options)
     {
         $options += ['api_key'=>config('buzzsumo.api_key')];
+
+        //dd($u)
 
         return $this->request->client->get($uri, ['query'=>$options]);
     }

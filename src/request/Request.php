@@ -21,7 +21,7 @@ class Request {
     public function __construct()
     {
         //Get the Buzzsumo API Key
-        $this->buzzsumoApiKey = env("Buzzsumo_Api_Key", Config::get('buzzsumo.api_key'));
+        $this->buzzsumoApiKey = env("BUZZSUMO_API_KEY", config('buzzsumo.api_key'));
 
         //if API key is null, throw Buzzsumo No API KEY ErrorException
 
