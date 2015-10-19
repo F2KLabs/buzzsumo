@@ -9,7 +9,7 @@
 namespace F2klabs\Buzzsumo;
 
 use F2klabs\Buzzsumo\request\Request;
-
+use F2klabs\Buzzsumo\response\Response as SumoReponse;
 
 class Buzzsumo {
 
@@ -27,20 +27,18 @@ class Buzzsumo {
      */
     public function articles($articleId, $options = [])
     {
-        return $this->_makeRequest('/search/shares.json', $options + ['article_id'=>$articleId])->getBody();
+        return new SumoReponse($this->_makeRequest('/search/shares.json', $options + ['article_id'=>$articleId]));
     }
 
     public function content($keyword, $options = [])
     {
-        return new $this->_makeRequest('/search/articles.json', $options + ['q'=>$keyword])->getBody();
+        return new SumoReponse($this->_makeRequest('/search/articles.json', $options + ['q'=>$keyword]));
     }
 
     private function _makeRequest($uri, $options)
     {
         $options += ['api_key'=>config('buzzsumo.api_key')];
 
-        //dd($u)
-
-        return $this->request->client->get($uri, ['query'=>$options]);
+        return new SumoReponse($this->request->client->get($uri, ['query'=>$options]));
     }
 }
