@@ -27,8 +27,7 @@ class Request {
 
         //Guzzle Client
         $this->client = new Client([
-                "base_uri"=> "http://api.buzzsumo.com/search",
-                "auth" => $this->auth
-            ]);
+            "base_uri"=> "http://api.buzzsumo.com/search/"
+        ]);
     }
 }

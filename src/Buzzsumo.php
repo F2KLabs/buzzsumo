@@ -10,6 +10,7 @@ namespace F2klabs\Buzzsumo;
 
 use F2klabs\Buzzsumo\request\Request;
 use F2klabs\Buzzsumo\response\Response as SumoReponse;
+use League\Flysystem\Exception;
 
 class Buzzsumo {
 
@@ -27,18 +28,28 @@ class Buzzsumo {
      */
     public function articles($articleId, $options = [])
     {
-        return new SumoReponse($this->_makeRequest('/search/shares.json', $options + ['article_id'=>$articleId]));
+        return new SumoReponse($this->_makeRequest('/shares.json', $options + ['article_id'=>$articleId]));
     }
 
+    /**
+     * @param $keyword
+     * @param array $options
+     * @return SumoReponse
+     */
     public function content($keyword, $options = [])
     {
-        return new SumoReponse($this->_makeRequest('/search/articles.json', $options + ['q'=>$keyword]));
+        return new SumoReponse($this->_makeRequest('articles.json', $options + ['q' => $keyword]));
     }
 
-    private function _makeRequest($uri, $options)
+    /**
+     * @param $uri
+     * @param $options
+     * @param string $method
+     * @return mixed
+     */
+    private function _makeRequest($uri, $options, $method = 'GET')
     {
-        $options += ['api_key'=>config('buzzsumo.api_key')];
-
-        return $this->request->client->get($uri, ['query'=>$options]);
+        return $this->request->client
+            ->request($method, $uri, ['query'=>$options + ['api_key'=>config('buzzsumo.api_key'), 'num_days'=> '7']]);
     }
 }
