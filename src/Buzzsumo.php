@@ -50,6 +50,6 @@ class Buzzsumo {
     private function _makeRequest($uri, $options, $method = 'GET')
     {
         return $this->request->client
-            ->request($method, $uri, ['query'=>$options + ['api_key'=>config('buzzsumo.api_key'), 'num_days'=> '7']]);
+            ->request($method, $uri, ['query'=>$options + ['api_key'=>config('buzzsumo.api_key')]]);
     }
 }
